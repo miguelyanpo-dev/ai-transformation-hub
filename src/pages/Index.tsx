@@ -6,13 +6,15 @@ import teamEsteban from "@/assets/team-esteban.png";
 import teamLaura from "@/assets/team-laura.png";
 import teamDaniel from "@/assets/team-daniel.png";
 import teamVanessa from "@/assets/team-vanessa.png";
+import teamBot from "@/assets/team-bot.png";
 
 const team = [
   { name: "Lorena Ortiz", role: "Líder en consultoría comercial", photo: teamVanessa },
-  { name: "Esteban", role: "Líder en diseño y marca", photo: teamEsteban },
+  { name: "Esteban Loaiza", role: "Líder en diseño y marca", photo: teamEsteban },
   { name: "Miguel Páez", role: "Líder en desarrollo de software", photo: teamMiguel },
   { name: "Laura García", role: "Líder en contenido estratégico", photo: teamLaura },
   { name: "Daniel Vega", role: "Líder en publicidad digital", photo: teamDaniel },
+  { name: "Creativos Bot", role: "Líder en automatización e IA", photo: teamBot },
 ];
 
 const fadeUp = (delay: number) => ({
@@ -70,29 +72,34 @@ const Index = () => {
           <h3 className="font-display text-[10px] md:text-xs tracking-[0.2em] uppercase text-muted-foreground mb-3">
             Equipo CreativosHouse
           </h3>
-          <div className="flex flex-wrap justify-center gap-2.5 md:gap-3">
-            {team.map((member) => (
-              <div
-                key={member.name}
-                className="flex flex-col items-center bg-card border border-border rounded-xl p-2.5 md:p-3 w-[130px] md:w-[150px] shadow-sm hover:shadow-md transition-shadow"
-              >
-                <img
-                  src={member.photo}
-                  alt={member.name}
-                  className="w-12 h-12 md:w-14 md:h-14 rounded-full object-cover mb-1.5 ring-2 ring-primary/20"
-                />
-                <span className="text-foreground font-semibold text-[11px] md:text-xs leading-tight">
-                  {member.name}
-                </span>
-                <span className="text-muted-foreground text-[9px] md:text-[10px] mt-0.5 leading-tight text-center">
-                  {member.role}
-                </span>
-                <a
-                  href="#"
-                  className="mt-1.5 inline-flex items-center justify-center text-[10px] md:text-[11px] font-medium text-primary border border-primary/30 rounded-full px-3 py-0.5 hover:bg-primary hover:text-primary-foreground transition-colors"
-                >
-                  Conocer
-                </a>
+          <div className="flex flex-wrap justify-center items-center gap-0">
+            {team.map((member, index) => (
+              <div key={member.name} className="flex items-center">
+                <div className="flex flex-col items-center bg-card border border-border rounded-xl p-2 md:p-2.5 w-[115px] md:w-[130px] shadow-sm hover:shadow-md transition-shadow">
+                  <img
+                    src={member.photo}
+                    alt={member.name}
+                    className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover mb-1.5 ring-2 ring-primary/20"
+                  />
+                  <span className="text-foreground font-semibold text-[10px] md:text-[11px] leading-tight">
+                    {member.name}
+                  </span>
+                  <span className="text-muted-foreground text-[8px] md:text-[9px] mt-0.5 leading-tight text-center">
+                    {member.role}
+                  </span>
+                  <a
+                    href="#"
+                    className="mt-1.5 inline-flex items-center justify-center text-[9px] md:text-[10px] font-semibold text-primary-foreground bg-primary rounded-full px-3 py-0.5 hover:opacity-90 transition-opacity"
+                  >
+                    Conocer
+                  </a>
+                </div>
+                {index < team.length - 1 && (
+                  <svg width="24" height="16" viewBox="0 0 24 16" className="mx-0.5 shrink-0 text-primary">
+                    <path d="M0 8h18" stroke="currentColor" strokeWidth="1.5" fill="none" />
+                    <path d="M15 3l6 5-6 5" stroke="currentColor" strokeWidth="1.5" fill="none" />
+                  </svg>
+                )}
               </div>
             ))}
           </div>
