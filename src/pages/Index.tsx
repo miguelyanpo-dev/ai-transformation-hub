@@ -1,46 +1,49 @@
 import { motion } from "framer-motion";
-import ParticleNetwork from "@/components/ParticleNetwork";
+import logo from "@/assets/logo.png";
+import teamMiguel from "@/assets/team-miguel.png";
+import teamEsteban from "@/assets/team-esteban.png";
+import teamLaura from "@/assets/team-laura.png";
+import teamDaniel from "@/assets/team-daniel.png";
+import teamVanessa from "@/assets/team-vanessa.png";
 
 const team = [
-  { name: "Miguel Páez", role: "Desarrollo de software y sistemas personalizados" },
-  { name: "Esteban", role: "Diseño profesional y creación de marca" },
-  { name: "Laura García", role: "Creación de contenido estratégico" },
-  { name: "Daniel", role: "Publicidad digital y tráfico pago" },
-  { name: "Vanessa", role: "Consultoría y crecimiento comercial" },
+  { name: "Miguel Páez", role: "Desarrollo de software", photo: teamMiguel },
+  { name: "Esteban", role: "Diseño y marca", photo: teamEsteban },
+  { name: "Laura García", role: "Contenido estratégico", photo: teamLaura },
+  { name: "Daniel", role: "Publicidad digital", photo: teamDaniel },
+  { name: "Vanessa", role: "Consultoría comercial", photo: teamVanessa },
 ];
 
 const fadeUp = (delay: number) => ({
-  initial: { opacity: 0, y: 20 },
+  initial: { opacity: 0, y: 16 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.7, delay, ease: "easeOut" as const },
+  transition: { duration: 0.6, delay, ease: "easeOut" as const },
 });
 
 const Index = () => {
   return (
-    <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <ParticleNetwork />
-
-      {/* Radial gradient overlay */}
+    <div className="relative h-screen max-h-screen flex items-center justify-center overflow-hidden bg-background">
+      {/* Subtle background pattern */}
       <div className="fixed inset-0 pointer-events-none" style={{
-        background: "radial-gradient(ellipse at center, transparent 0%, hsl(220 20% 4%) 70%)",
-        zIndex: 1,
+        background: "radial-gradient(ellipse at center, hsl(175 80% 35% / 0.03) 0%, transparent 70%)",
       }} />
 
-      <div className="relative z-10 w-full max-w-[900px] mx-auto px-6 py-16 text-center">
-        {/* Brand */}
-        <motion.div {...fadeUp(0.1)}>
-          <h2 className="font-display text-sm md:text-base tracking-[0.3em] uppercase text-primary mb-12 md:mb-16 text-glow">
+      <div className="relative z-10 w-full max-w-[960px] mx-auto px-6 py-8 text-center">
+        {/* Logo + Brand */}
+        <motion.div {...fadeUp(0.1)} className="flex flex-col items-center mb-6">
+          <img src={logo} alt="CreativosHouse Logo" className="w-14 h-14 md:w-16 md:h-16 mb-2" />
+          <h2 className="font-display text-xs md:text-sm tracking-[0.25em] uppercase text-primary font-semibold">
             CreativosHouse
           </h2>
         </motion.div>
 
         {/* Headline */}
         <motion.h1
-          {...fadeUp(0.3)}
-          className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-[3.4rem] font-bold leading-tight tracking-tight mb-8"
+          {...fadeUp(0.2)}
+          className="font-display text-2xl sm:text-3xl md:text-4xl font-bold leading-tight tracking-tight mb-4"
         >
           El mundo ya entró en la era de la{" "}
-          <span className="text-primary text-glow">inteligencia artificial</span>.
+          <span className="text-primary">inteligencia artificial</span>.
           <br />
           <span className="text-muted-foreground">
             ¿Tu empresa aún no entra ni en la era digital?
@@ -48,41 +51,59 @@ const Index = () => {
         </motion.h1>
 
         {/* Supporting text */}
-        <motion.div {...fadeUp(0.5)} className="max-w-2xl mx-auto mb-14">
-          <p className="text-secondary-foreground text-base md:text-lg leading-relaxed mb-4">
-            En CreativosHouse ayudamos a empresas a evolucionar paso a paso:
-            marca, contenido, publicidad, sistemas modernos y automatización.
+        <motion.div {...fadeUp(0.3)} className="max-w-xl mx-auto mb-8">
+          <p className="text-secondary-foreground text-sm md:text-base leading-relaxed mb-2">
+            Ayudamos a empresas a evolucionar paso a paso:
+            marca, contenido, publicidad, sistemas y automatización.
           </p>
-          <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
+          <p className="text-muted-foreground text-sm md:text-base leading-relaxed">
             Diseñamos proyectos personalizados de transformación digital
             para que tu negocio compita en la nueva era.
           </p>
         </motion.div>
 
-        {/* Team */}
-        <motion.div {...fadeUp(0.7)} className="mb-14">
-          <h3 className="font-display text-xs tracking-[0.25em] uppercase text-muted-foreground mb-6">
+        {/* Team Cards */}
+        <motion.div {...fadeUp(0.45)} className="mb-8">
+          <h3 className="font-display text-xs tracking-[0.2em] uppercase text-muted-foreground mb-4">
             Equipo CreativosHouse
           </h3>
-          <div className="flex flex-wrap justify-center gap-x-6 gap-y-3">
+          <div className="flex flex-wrap justify-center gap-3 md:gap-4">
             {team.map((member) => (
-              <div key={member.name} className="text-sm">
-                <span className="text-foreground font-medium">{member.name}</span>
-                <span className="text-muted-foreground"> — {member.role}</span>
+              <div
+                key={member.name}
+                className="flex flex-col items-center bg-card border border-border rounded-xl p-3 md:p-4 w-[140px] md:w-[155px] shadow-sm hover:shadow-md transition-shadow"
+              >
+                <img
+                  src={member.photo}
+                  alt={member.name}
+                  className="w-14 h-14 md:w-16 md:h-16 rounded-full object-cover mb-2 ring-2 ring-primary/20"
+                />
+                <span className="text-foreground font-semibold text-xs md:text-sm leading-tight">
+                  {member.name}
+                </span>
+                <span className="text-muted-foreground text-[10px] md:text-xs mt-0.5 leading-tight text-center">
+                  {member.role}
+                </span>
+                <a
+                  href="#"
+                  className="mt-2 text-[10px] md:text-xs font-medium text-primary hover:underline"
+                >
+                  Conocer →
+                </a>
               </div>
             ))}
           </div>
         </motion.div>
 
         {/* CTA */}
-        <motion.div {...fadeUp(0.9)}>
+        <motion.div {...fadeUp(0.6)}>
           <a
             href="#"
-            className="inline-block font-display font-semibold text-base md:text-lg px-10 py-4 rounded-lg bg-primary text-primary-foreground btn-glow transition-all duration-300 hover:scale-105"
+            className="inline-block font-display font-semibold text-sm md:text-base px-8 py-3 rounded-lg bg-primary text-primary-foreground btn-glow transition-all duration-300 hover:scale-105"
           >
             Iniciar mi transformación digital
           </a>
-          <p className="text-muted-foreground text-sm mt-4 max-w-md mx-auto">
+          <p className="text-muted-foreground text-xs mt-3 max-w-md mx-auto">
             Evaluamos tu empresa y diseñamos el plan de transformación digital adecuado.
           </p>
         </motion.div>
