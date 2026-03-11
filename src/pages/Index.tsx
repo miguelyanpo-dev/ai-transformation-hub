@@ -6,13 +6,15 @@ import teamEsteban from "@/assets/team-esteban.png";
 import teamLaura from "@/assets/team-laura.png";
 import teamDaniel from "@/assets/team-daniel.png";
 import teamVanessa from "@/assets/team-vanessa.png";
+import teamBot from "@/assets/team-bot.png";
 
 const team = [
   { name: "Lorena Ortiz", role: "Líder en consultoría comercial", photo: teamVanessa },
-  { name: "Esteban", role: "Líder en diseño y marca", photo: teamEsteban },
+  { name: "Esteban Loaiza", role: "Líder en diseño y marca", photo: teamEsteban },
   { name: "Miguel Páez", role: "Líder en desarrollo de software", photo: teamMiguel },
   { name: "Laura García", role: "Líder en contenido estratégico", photo: teamLaura },
   { name: "Daniel Vega", role: "Líder en publicidad digital", photo: teamDaniel },
+  { name: "Creativos Bot", role: "Líder en automatización e IA", photo: teamBot },
 ];
 
 const fadeUp = (delay: number) => ({
