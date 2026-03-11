@@ -57,7 +57,7 @@ const ParticleNetwork = () => {
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < connectionDistance) {
             const opacity = (1 - dist / connectionDistance) * 0.15;
-            ctx.strokeStyle = `hsla(175, 80%, 50%, ${opacity})`;
+            ctx.strokeStyle = `hsla(175, 80%, 35%, ${opacity})`;
             ctx.lineWidth = 0.5;
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
