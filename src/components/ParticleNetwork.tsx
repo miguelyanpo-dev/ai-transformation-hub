@@ -19,8 +19,8 @@ const ParticleNetwork = () => {
 
     let animationId: number;
     const particles: Particle[] = [];
-    const count = 60;
-    const connectionDistance = 150;
+    const count = 90;
+    const connectionDistance = 220;
 
     const resize = () => {
       canvas.width = window.innerWidth;
@@ -33,9 +33,9 @@ const ParticleNetwork = () => {
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.4,
-        vy: (Math.random() - 0.5) * 0.4,
-        radius: Math.random() * 1.5 + 0.5,
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: (Math.random() - 0.5) * 0.5,
+        radius: Math.random() * 2.5 + 1.2,
       });
     }
 
@@ -56,9 +56,9 @@ const ParticleNetwork = () => {
           const dy = particles[i].y - particles[j].y;
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < connectionDistance) {
-            const opacity = (1 - dist / connectionDistance) * 0.15;
+            const opacity = (1 - dist / connectionDistance) * 0.35;
             ctx.strokeStyle = `hsla(175, 80%, 35%, ${opacity})`;
-            ctx.lineWidth = 0.5;
+            ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
@@ -71,7 +71,7 @@ const ParticleNetwork = () => {
       particles.forEach((p) => {
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = "hsla(175, 80%, 35%, 0.25)";
+        ctx.fillStyle = "hsla(175, 80%, 35%, 0.55)";
         ctx.fill();
       });
 

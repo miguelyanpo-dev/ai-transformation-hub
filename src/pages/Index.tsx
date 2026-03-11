@@ -1,7 +1,8 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import ParticleNetwork from "@/components/ParticleNetwork";
 import logo from "@/assets/logo.png";
-import teamMiguel from "@/assets/team-miguel.png";
+import teamMiguel from "@/assets/team-miguel.jpg";
 import teamEsteban from "@/assets/team-esteban.png";
 import teamLaura from "@/assets/team-laura.png";
 import teamDaniel from "@/assets/team-daniel.png";
@@ -23,7 +24,56 @@ const fadeUp = (delay: number) => ({
   transition: { duration: 0.6, delay, ease: "easeOut" as const },
 });
 
+const LINE1_PREFIX  = "El mundo ya entró en la era de la ";
+const LINE1_COLORED = "inteligencia artificial";
+const LINE1_SUFFIX  = ".";
+const LINE1_FULL    = LINE1_PREFIX + LINE1_COLORED + LINE1_SUFFIX;
+const LINE2_FULL    = "¿Tu empresa aún no entra ni en la era digital?";
+const SPEED = 55; // ms por carácter (más despacio)
+
 const Index = () => {
+  const [typed1, setTyped1]       = useState(0);
+  const [showLine2, setShowLine2] = useState(false);
+  const [typed2, setTyped2]       = useState(0);
+
+  // Escribe línea 1 carácter a carácter
+  useEffect(() => {
+    if (typed1 < LINE1_FULL.length) {
+      const t = setTimeout(() => setTyped1((n) => n + 1), SPEED);
+      return () => clearTimeout(t);
+    }
+    // Línea 1 terminada → esperar 1 s antes de iniciar línea 2
+    const t = setTimeout(() => setShowLine2(true), 1000);
+    return () => clearTimeout(t);
+  }, [typed1]);
+
+  // Escribe línea 2 carácter a carácter
+  useEffect(() => {
+    if (!showLine2 || typed2 >= LINE2_FULL.length) return;
+    const t = setTimeout(() => setTyped2((n) => n + 1), SPEED);
+    return () => clearTimeout(t);
+  }, [showLine2, typed2]);
+
+  // Ciclo: cuando ambas líneas terminan, reiniciar a los 3 s
+  const line2Done = typed2 >= LINE2_FULL.length;
+  useEffect(() => {
+    if (!line2Done) return;
+    const t = setTimeout(() => {
+      setTyped1(0);
+      setShowLine2(false);
+      setTyped2(0);
+    }, 3000);
+    return () => clearTimeout(t);
+  }, [line2Done]);
+
+  const prefixShown  = LINE1_FULL.slice(0, Math.min(typed1, LINE1_PREFIX.length));
+  const coloredShown = typed1 > LINE1_PREFIX.length
+    ? LINE1_FULL.slice(LINE1_PREFIX.length, Math.min(typed1, LINE1_PREFIX.length + LINE1_COLORED.length))
+    : "";
+  const suffixShown  = typed1 > LINE1_PREFIX.length + LINE1_COLORED.length ? LINE1_SUFFIX : "";
+
+  const line1Done = typed1 >= LINE1_FULL.length;
+
   return (
     <div className="relative h-screen max-h-screen flex items-center justify-center overflow-hidden bg-background">
       <ParticleNetwork />
@@ -42,18 +92,33 @@ const Index = () => {
           </h2>
         </motion.div>
 
-        {/* Headline */}
-        <motion.h1
-          {...fadeUp(0.2)}
-          className="font-display text-xl sm:text-2xl md:text-3xl font-bold leading-tight tracking-tight mb-3"
-        >
-          El mundo ya entró en la era de la{" "}
-          <span className="text-primary">inteligencia artificial</span>.
-          <br />
-          <span className="text-muted-foreground">
-            ¿Tu empresa aún no entra ni en la era digital?
+        {/* Headline — typewriter */}
+        <h1 className="font-display text-xl sm:text-2xl md:text-3xl font-bold leading-tight tracking-tight mb-3 min-h-[4rem] md:min-h-[5rem]">
+          {/* Línea 1 */}
+          <span>
+            {prefixShown}
+            {coloredShown && (
+              <span className="text-primary">{coloredShown}</span>
+            )}
+            {suffixShown}
+            {!line1Done && (
+              <span className="inline-block w-[2px] h-[1em] bg-primary align-middle ml-0.5 animate-pulse" />
+            )}
           </span>
-        </motion.h1>
+
+          {/* Línea 2 — aparece cuando arranca */}
+          {showLine2 && (
+            <>
+              <br />
+              <span className="text-muted-foreground">
+                {LINE2_FULL.slice(0, typed2)}
+                {!line2Done && (
+                  <span className="inline-block w-[2px] h-[1em] bg-muted-foreground align-middle ml-0.5 animate-pulse" />
+                )}
+              </span>
+            </>
+          )}
+        </h1>
 
         {/* Supporting text */}
         <motion.div {...fadeUp(0.3)} className="max-w-xl mx-auto mb-6">
@@ -72,36 +137,40 @@ const Index = () => {
           <h3 className="font-display text-[10px] md:text-xs tracking-[0.2em] uppercase text-muted-foreground mb-3">
             Equipo CreativosHouse
           </h3>
-          <div className="flex flex-wrap justify-center items-center gap-0">
+          <div className="overflow-x-auto md:overflow-x-visible pb-2 md:pb-0 -mx-6 md:mx-0 px-6 md:px-0">
+            <div className="flex flex-nowrap md:justify-center items-stretch gap-0 w-max md:w-auto mx-auto">
             {team.map((member, index) => (
-              <div key={member.name} className="flex items-center">
-                <div className="flex flex-col items-center bg-card border border-border rounded-xl p-2 md:p-2.5 w-[115px] md:w-[130px] shadow-sm hover:shadow-md transition-shadow">
+              <div key={member.name} className="flex items-stretch">
+                <div className="flex flex-col items-center bg-card border border-border rounded-xl p-2 md:p-2.5 w-[110px] md:w-[120px] shadow-sm hover:shadow-md transition-shadow">
                   <img
                     src={member.photo}
                     alt={member.name}
-                    className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover mb-1.5 ring-2 ring-primary/20"
+                    className="w-10 h-10 md:w-11 md:h-11 rounded-full object-cover mb-1.5 ring-2 ring-primary/20 shrink-0"
                   />
-                  <span className="text-foreground font-semibold text-[10px] md:text-[11px] leading-tight">
+                  <span className="text-foreground font-semibold text-[10px] md:text-[11px] leading-tight text-center">
                     {member.name}
                   </span>
-                  <span className="text-muted-foreground text-[8px] md:text-[9px] mt-0.5 leading-tight text-center">
+                  <span className="text-muted-foreground text-[8px] md:text-[9px] mt-0.5 leading-tight text-center flex-1">
                     {member.role}
                   </span>
                   <a
                     href="#"
-                    className="mt-1.5 inline-flex items-center justify-center text-[9px] md:text-[10px] font-semibold text-primary-foreground bg-primary rounded-full px-3 py-0.5 hover:opacity-90 transition-opacity"
+                    className="mt-2 inline-flex items-center justify-center text-[9px] md:text-[10px] font-semibold text-primary-foreground bg-primary rounded-full px-3 py-0.5 hover:opacity-90 transition-opacity shrink-0"
                   >
                     Conocer
                   </a>
                 </div>
                 {index < team.length - 1 && (
-                  <svg width="24" height="16" viewBox="0 0 24 16" className="mx-0.5 shrink-0 text-primary">
-                    <path d="M0 8h18" stroke="currentColor" strokeWidth="1.5" fill="none" />
-                    <path d="M15 3l6 5-6 5" stroke="currentColor" strokeWidth="1.5" fill="none" />
-                  </svg>
+                  <div className="flex items-center self-center">
+                    <svg width="20" height="14" viewBox="0 0 24 16" className="mx-0.5 shrink-0 text-primary">
+                      <path d="M0 8h18" stroke="currentColor" strokeWidth="1.5" fill="none" />
+                      <path d="M15 3l6 5-6 5" stroke="currentColor" strokeWidth="1.5" fill="none" />
+                    </svg>
+                  </div>
                 )}
               </div>
             ))}
+            </div>
           </div>
         </motion.div>
 
