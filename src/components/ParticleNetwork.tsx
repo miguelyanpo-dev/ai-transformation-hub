@@ -71,7 +71,7 @@ const ParticleNetwork = () => {
       particles.forEach((p) => {
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = "hsla(175, 80%, 50%, 0.4)";
+        ctx.fillStyle = "hsla(175, 80%, 35%, 0.25)";
         ctx.fill();
       });
 
