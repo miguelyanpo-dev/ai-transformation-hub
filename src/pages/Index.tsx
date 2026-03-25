@@ -88,13 +88,10 @@ const Index = () => {
         background: "rgba(255, 255, 255, 0.78)",
       }} />
 
-      <div className="relative z-10 w-full max-w-[960px] mx-auto px-6 py-6 text-center">
+      <div className="relative z-10 w-full max-w-[960px] mx-auto px-6 py-4 text-center">
         {/* Logo + Brand */}
-        <motion.div {...fadeUp(0.1)} className="flex flex-col items-center mb-5">
-          <img src={logo} alt="CreativosHouse Logo" className="w-14 h-14 md:w-16 md:h-16 mb-2" />
-          <h2 className="font-display text-xs md:text-sm tracking-[0.25em] uppercase text-primary font-semibold">
-            CreativosHouse
-          </h2>
+        <motion.div {...fadeUp(0.1)} className="flex flex-col items-center ">
+          <img src={logo} alt="CreativosHouse Logo" className="w-44 h-40 md:w-44 md:h-40" />
         </motion.div>
 
         {/* Headline — typewriter */}
