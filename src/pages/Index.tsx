@@ -83,6 +83,11 @@ const Index = () => {
         background: "radial-gradient(ellipse at center, hsl(175 80% 35% / 0.03) 0%, transparent 70%)",
       }} />
 
+      {/* Overlay para suavizar las partículas en todos los tamaños */}
+      <div className="fixed inset-0 pointer-events-none" style={{
+        background: "rgba(255, 255, 255, 0.78)",
+      }} />
+
       <div className="relative z-10 w-full max-w-[960px] mx-auto px-6 py-6 text-center">
         {/* Logo + Brand */}
         <motion.div {...fadeUp(0.1)} className="flex flex-col items-center mb-5">

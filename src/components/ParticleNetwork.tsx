@@ -56,7 +56,7 @@ const ParticleNetwork = () => {
           const dy = particles[i].y - particles[j].y;
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < connectionDistance) {
-            const opacity = (1 - dist / connectionDistance) * 0.14;
+            const opacity = (1 - dist / connectionDistance) * 0.18;
             ctx.strokeStyle = `hsla(175, 80%, 35%, ${opacity})`;
             ctx.lineWidth = 0.6;
             ctx.beginPath();
@@ -71,7 +71,7 @@ const ParticleNetwork = () => {
       particles.forEach((p) => {
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = "hsla(175, 80%, 35%, 0.35)";
+        ctx.fillStyle = "hsla(175, 80%, 35%, 0.12)";
         ctx.fill();
       });
 
